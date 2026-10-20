@@ -15,7 +15,7 @@ import { boot, getState, subscribe, type AppState } from "./store";
 import { useStore, shallow } from "./hooks/useStore";
 
 function App() {
-  const state = useStore(getState, subscribe);
+  const state = useStore((s: AppState) => s, shallow);
   useEffect(() => {
     void boot();
   }, []);

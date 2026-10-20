@@ -6,24 +6,27 @@ import { useEffect } from "react";
 import { Icon, Logo, type IconName } from "./icons";
 
 type BtnProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "ghost" | "danger" | "subtle";
+  variant?: "primary" | "ghost" | "danger" | "subtle" | "outline";
   icon?: IconName;
   size?: "sm" | "md";
   /** Tooltip text (rendered as the native `title` attribute). */
   tip?: string;
   active?: boolean;
+  /** Shows a spinner and disables the button while true. */
+  loading?: boolean;
 };
 
-export function Btn({ variant = "ghost", icon, size = "md", tip, active, className = "", children, ...rest }: BtnProps) {
+export function Btn({ variant = "ghost", icon, size = "md", tip, active, loading, disabled, className = "", children, ...rest }: BtnProps) {
   return (
     <button
       type="button"
       title={tip}
       aria-pressed={active}
+      disabled={disabled || loading}
       className={`btn btn-${variant} btn-${size}${active ? " btn-active" : ""} ${className}`.trim()}
       {...rest}
     >
-      {icon ? <Icon name={icon} size={size === "sm" ? 13 : 15} /> : null}
+      {loading ? <Spinner size={size === "sm" ? 13 : 15} /> : icon ? <Icon name={icon} size={size === "sm" ? 13 : 15} /> : null}
       {children}
     </button>
   );

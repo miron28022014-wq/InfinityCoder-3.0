@@ -17,7 +17,8 @@ export type IconName =
   | "rocket" | "wand" | "bookOpen" | "list" | "download" | "eye" | "eyeOff"
   | "key" | "server" | "cpu" | "disk" | "history" | "rotate" | "arrowUp"
   | "arrowRight" | "grid" | "stack" | "flask" | "shieldCheck" | "globe" | "info"
-  | "link" | "unlink" | "pin" | "menu" | "square" | "checkSquare" | "squareOff";
+  | "link" | "unlink" | "pin" | "menu" | "square" | "checkSquare" | "squareOff"
+  | "collapseAll";
 
 /** Single-path glyphs keep the bundle small; multi-part glyphs use fragments. */
 const PATHS: Record<IconName, string> = {
@@ -103,7 +104,8 @@ const PATHS: Record<IconName, string> = {
   menu: "M4 7h16M4 12h16M4 17h16",
   square: "M6 6h12v12H6z",
   checkSquare: "M4.5 6.8A1.8 1.8 0 0 1 6.3 5h11.4a1.8 1.8 0 0 1 1.8 1.8v10.4a1.8 1.8 0 0 1-1.8 1.8H6.3a1.8 1.8 0 0 1-1.8-1.8zM8.5 12l2.5 2.5 4.5-5",
-  squareOff: "M6 6h12v12H6zM4 4l16 16"
+  squareOff: "M6 6h12v12H6zM4 4l16 16",
+  collapseAll: "M9 9L4.5 4.5M4.5 9L9 4.5M15 15l4.5-4.5M19.5 15L15 10.5M4 13v7h7M20 11V4h-7"
 };
 
 /** Glyphs that need an extra dot/square head — kept out of the main path string. */

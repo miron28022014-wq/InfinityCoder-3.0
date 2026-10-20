@@ -5,7 +5,7 @@ export type ProviderKind = "cloud" | "local" | "relay";
 export type Mode = "agent" | "ask" | "swarm";
 export type Effort = "low" | "medium" | "high" | "ultra";
 /** Legacy aliases kept for persisted settings: "edits" ≡ "smart", boolean ≡ "always"/"never". */
-export type AskPolicy = "always" | "smart" | "edits" | "never" | true | false;
+export type AskPolicy = "always" | "smart" | "edits" | "never";
 export type SidebarTab = "files" | "search" | "agents" | "memory";
 
 export interface FsItem {
@@ -131,7 +131,6 @@ export interface Settings {
   askPolicy: AskPolicy;
   activeAgent: string;
   autoRoute: boolean;
-  ask: boolean;
   planFirst: boolean;
   verifyResult: boolean;
   autoRecall: boolean;

@@ -215,7 +215,7 @@ export class AgentEngine {
       }
       case "search_files": {
         const hits = await api.searchFiles(root, path || root, String(args.query ?? ""), undefined, 50);
-        return hits.map((h) => `${h.path}:${h.line}: ${h.preview}`).join("\n") || "ничего не найдено";
+        return hits.map((h) => `${h.path}:${h.line}: ${h.text}`).join("\n") || "ничего не найдено";
       }
       case "run_command": {
         const res = await fetch("/api/exec", {

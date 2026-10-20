@@ -211,8 +211,8 @@ export function SettingsDialog() {
 
               <Field label="Подтверждения" hint="когда спрашивать перед действием">
                 <Select<AskPolicy>
-                  value={settings.ask}
-                  onChange={v => patchSettings({ ask: v as AskPolicy })}
+                  value={settings.askPolicy}
+                  onChange={v => patchSettings({ askPolicy: v as AskPolicy })}
                   options={[
                     { value: "never", label: "Никогда — работаю автономно" },
                     { value: "smart", label: "Только опасные операции" },

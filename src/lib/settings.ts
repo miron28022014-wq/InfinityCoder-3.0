@@ -27,7 +27,6 @@ export const DEFAULT_SETTINGS: Settings = {
   askPolicy: "smart",
   activeAgent: "coder",
   autoRoute: true,
-  ask: false,
   planFirst: true,
   verifyResult: true,
   autoRecall: true,
@@ -60,12 +59,19 @@ export function loadSettings(): Settings {
     const raw = localStorage.getItem(KEY);
     if (!raw) return { ...DEFAULT_SETTINGS };
     const parsed = JSON.parse(raw) as Partial<Settings>;
-    const merged: Settings = { ...DEFAULT_SETTINGS, ...parsed };
-    // Migrate legacy askPolicy values written by older builds.
-    if (merged.askPolicy === true || (merged.askPolicy as unknown) === "always") merged.askPolicy = "always";
-    else if (merged.askPolicy === false || (merged.askPolicy as unknown) === "edits") merged.askPolicy = "smart";
-    else if (merged.askPolicy !== "never") merged.askPolicy = DEFAULT_SETTINGS.askPolicy;
-    return merged;
+    const merged = { ...DEFAULT_SETTINGS, ...parsed } as Settings & Record<string, unknown>;
+    // Migrate legacy askPolicy values written by older builds (booleans / aliases).
+    const legacyAsk = merged.askPolicy as unknown;
+    if (legacyAsk === true || legacyAsk === "always") merged.askPolicy = "always";
+    else if (legacyAsk === false) merged.askPolicy = "never";
+    else if (legacyAsk === "edits") merged.askPolicy = "smart";
+    else if (legacyAsk !== "never" && legacyAsk !== "smart") merged.askPolicy = DEFAULT_SETTINGS.askPolicy;
+    // Legacy boolean `ask` flag → new askPolicy field.
+    if (typeof merged.ask === "boolean") {
+      if (merged.askPolicy === DEFAULT_SETTINGS.askPolicy) merged.askPolicy = merged.ask ? "always" : "smart";
+      delete merged.ask;
+    }
+    return merged as Settings;
   } catch {
     return { ...DEFAULT_SETTINGS };
   }

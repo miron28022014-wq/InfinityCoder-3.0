@@ -13,7 +13,8 @@ import type { FsItem, GitStatus, LedgerEntry } from "../types";
 export interface SearchHit {
   path: string;
   line: number;
-  preview: string;
+  /** Matching line text. Kept as `text` to stay in sync with store.SearchHit. */
+  text: string;
 }
 
 export const isTauri: boolean =
@@ -190,7 +191,7 @@ export const api = {
         dir,
         query,
         limit
-      }).then((hits) => hits.map((h) => ({ path: h.path, line: h.line, preview: h.text })));
+      }).then((hits) => hits.map((h) => ({ path: h.path, line: h.line, text: h.text })));
     }
     const v = vfsLoad();
     const q = query.toLowerCase();
@@ -199,7 +200,7 @@ export const api = {
       const lines = content.split("\n");
       for (let i = 0; i < lines.length && out.length < limit; i++) {
         if (lines[i].toLowerCase().includes(q)) {
-          out.push({ path, line: i + 1, preview: lines[i].trim().slice(0, 200) });
+          out.push({ path, line: i + 1, text: lines[i].trim().slice(0, 200) });
         }
       }
       if (out.length >= limit) break;
