@@ -1,0 +1,1 @@
+import{i}from"./index-sdahE4Ph.js";import"./react-BdZgHC1P.js";import"./codemirror-BSj9EHWi.js";async function n(e={}){return typeof e=="object"&&Object.freeze(e),await i("plugin:dialog|open",{options:e})}export{n as open};
