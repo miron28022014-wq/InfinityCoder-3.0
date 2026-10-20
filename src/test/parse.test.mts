@@ -7,7 +7,7 @@
  *
  *   npx tsx test/parse.test.mts
  */
-import { parseToolCalls, stripCalls, visiblePrefix } from "../src/lib/parse.ts";
+import { parseToolCalls, stripCalls, visiblePrefix } from "../lib/parse";
 
 const LT = String.fromCharCode(60);
 const OPEN = `${LT}tool_call>`;
