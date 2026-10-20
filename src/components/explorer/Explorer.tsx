@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Icon, type IconName } from "../../icons";
-import { Btn } from "../ui";
+import { Btn } from "../../ui";
 import { useStore } from "../../hooks/useStore";
 import { openFolder, patchSettings, searchInProject, toggleLeft } from "../../store";
 import type { SidebarTab } from "../../types";

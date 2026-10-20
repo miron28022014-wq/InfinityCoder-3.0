@@ -7,7 +7,14 @@
  * operations and to a localStorage-backed virtual filesystem otherwise, so the
  * UI stays fully explorable without Rust.
  */
-import type { FsItem, LedgerEntry, SearchHit } from "../types";
+import type { FsItem, GitStatus, LedgerEntry } from "../types";
+
+/** A hit produced by the in-browser / bridge search backends. */
+export interface SearchHit {
+  path: string;
+  line: number;
+  preview: string;
+}
 
 export const isTauri: boolean =
   typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
@@ -213,8 +220,8 @@ export const api = {
     return { files, symbols, memories: memoryEntries().length, is_repo: false };
   },
 
-  async gitStatus(root: string): Promise<{ branch: string; dirty: number; ahead: number; behind: number } | null> {
-    if (isTauri) return invoke("git_status", { root });
+  async gitStatus(root: string): Promise<GitStatus | null> {
+    if (isTauri) return invoke<GitStatus>("git_status", { root });
     return null;
   },
 

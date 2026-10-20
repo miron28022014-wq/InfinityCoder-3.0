@@ -9,14 +9,18 @@ type BtnProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "primary" | "ghost" | "danger" | "subtle";
   icon?: IconName;
   size?: "sm" | "md";
-  title?: string;
+  /** Tooltip text (rendered as the native `title` attribute). */
+  tip?: string;
+  active?: boolean;
 };
 
-export function Btn({ variant = "ghost", icon, size = "md", className = "", children, ...rest }: BtnProps) {
+export function Btn({ variant = "ghost", icon, size = "md", tip, active, className = "", children, ...rest }: BtnProps) {
   return (
     <button
       type="button"
-      className={`btn btn-${variant} btn-${size} ${className}`.trim()}
+      title={tip}
+      aria-pressed={active}
+      className={`btn btn-${variant} btn-${size}${active ? " btn-active" : ""} ${className}`.trim()}
       {...rest}
     >
       {icon ? <Icon name={icon} size={size === "sm" ? 13 : 15} /> : null}
@@ -25,8 +29,8 @@ export function Btn({ variant = "ghost", icon, size = "md", className = "", chil
   );
 }
 
-export function StatusDot({ status }: { status: "ready" | "error" | "checking" | "offline" | "idle" }) {
-  return <span className={`status-dot status-${status}`} aria-label={status} />;
+export function StatusDot({ status, size }: { status: "ready" | "error" | "checking" | "offline" | "idle"; size?: number }) {
+  return <span className={`status-dot status-${status}`} style={size ? { width: size, height: size } : undefined} aria-label={status} />;
 }
 
 export function Kbd({ children }: { children: ReactNode }) {
@@ -57,11 +61,19 @@ export function Dialog({
   onClose,
   children,
   wide,
+  open = true,
+  icon,
+  width,
+  footer,
 }: {
   title: string;
   onClose: () => void;
   children: ReactNode;
   wide?: boolean;
+  open?: boolean;
+  icon?: IconName;
+  width?: number;
+  footer?: ReactNode;
 }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -71,20 +83,24 @@ export function Dialog({
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
+  if (!open) return null;
+
   return (
     <div className="dialog-overlay" onMouseDown={onClose}>
       <div
         className={`dialog ${wide ? "dialog-wide" : ""}`.trim()}
         role="dialog"
         aria-label={title}
+        style={width ? { maxWidth: width } : undefined}
         onMouseDown={(e) => e.stopPropagation()}
       >
         <header className="dialog-head">
-          <Logo size={18} />
+          {icon ? <Icon name={icon} size={18} /> : <Logo size={18} />}
           <h2>{title}</h2>
           <Btn icon="x" variant="subtle" onClick={onClose} aria-label="Закрыть" />
         </header>
         <div className="dialog-body">{children}</div>
+        {footer ? <footer className="dialog-foot">{footer}</footer> : null}
       </div>
     </div>
   );
@@ -105,22 +121,22 @@ export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
   return <input className={`input ${className}`.trim()} {...rest} />;
 }
 
-export function Select({
+export function Select<T extends string = string>({
   value,
   onChange,
   options,
   className = "",
 }: {
-  value: string;
-  onChange: (v: string) => void;
-  options: Array<{ value: string; label: string }> | Record<string, string>;
+  value: T;
+  onChange: (v: T) => void;
+  options: Array<{ value: T; label: string }> | Record<string, string>;
   className?: string;
 }) {
   const list = Array.isArray(options)
     ? options
     : Object.entries(options).map(([value, label]) => ({ value, label }));
   return (
-    <select className={`input select ${className}`.trim()} value={value} onChange={(e) => onChange(e.target.value)}>
+    <select className={`input select ${className}`.trim()} value={value} onChange={(e) => onChange(e.target.value as T)}>
       {list.map((o) => (
         <option key={o.value} value={o.value}>
           {o.label}
@@ -130,18 +146,22 @@ export function Select({
   );
 }
 
-export function Segmented<T extends string>({
+export function Segmented<T extends string = string>({
   value,
   onChange,
   options,
+  items,
 }: {
   value: T;
   onChange: (v: T) => void;
-  options: Array<{ value: T; label: string }>;
+  /** The canonical prop name; `items` is accepted as an alias. */
+  options?: Array<{ value: T; label: string; icon?: IconName }>;
+  items?: Array<{ value: T; label: string; icon?: IconName }>;
 }) {
+  const list = options ?? items ?? [];
   return (
     <div className="segmented" role="tablist">
-      {options.map((o) => (
+      {list.map((o) => (
         <button
           key={o.value}
           type="button"
@@ -150,6 +170,7 @@ export function Segmented<T extends string>({
           className={`segment ${value === o.value ? "active" : ""}`.trim()}
           onClick={() => onChange(o.value)}
         >
+          {o.icon ? <Icon name={o.icon} size={13} /> : null}
           {o.label}
         </button>
       ))}

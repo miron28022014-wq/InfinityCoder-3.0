@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Icon, type IconName } from "../../icons";
-import { Btn, Dialog, Field, Input, Segmented, Select, Switch } from "../ui";
+import { Btn, Dialog, Field, Input, Segmented, Select, Switch } from "../../ui";
 import { useStore, shallow } from "../../hooks/useStore";
 import { checkProvider, openSettings, patchSettings } from "../../store";
 import { CLOUD_MODELS, DEFAULT_SETTINGS, RELAY_BASE_URL } from "../../lib/settings";

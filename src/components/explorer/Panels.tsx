@@ -3,7 +3,7 @@
  */
 import { useState } from "react";
 import { Icon } from "../../icons";
-import { Btn, Empty, Input } from "../ui";
+import { Btn, Empty, Input } from "../../ui";
 import { useStore } from "../../hooks/useStore";
 import { AGENTS } from "../../lib/agents";
 import { memory } from "../../store";

@@ -1,5 +1,5 @@
 import { Logo, Icon } from "../../icons";
-import { Btn, StatusDot, Kbd } from "../ui";
+import { Btn, StatusDot, Kbd } from "../../ui";
 import { useStore, shallow, formatBytes } from "../../hooks/useStore";
 import {
   openFolder,

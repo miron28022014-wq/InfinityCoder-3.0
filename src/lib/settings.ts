@@ -24,7 +24,7 @@ export const DEFAULT_SETTINGS: Settings = {
   localPort: 8080,
   mode: "agent",
   effort: "medium",
-  askPolicy: "edits",
+  askPolicy: "smart",
   activeAgent: "coder",
   autoRoute: true,
   ask: false,
@@ -52,7 +52,7 @@ export const EFFORT_PRESETS: Record<Effort, EffortPreset> = {
   low: { maxTurns: 6, temperature: 0.1, maxTokens: 2048, label: "Быстро" },
   medium: { maxTurns: 16, temperature: 0.1, maxTokens: 4096, label: "Баланс" },
   high: { maxTurns: 32, temperature: 0.05, maxTokens: 8192, label: "Тщательно" },
-  max: { maxTurns: 64, temperature: 0.0, maxTokens: 16384, label: "Максимум" }
+  ultra: { maxTurns: 64, temperature: 0.0, maxTokens: 16384, label: "Максимум" }
 };
 
 export function loadSettings(): Settings {
@@ -60,7 +60,12 @@ export function loadSettings(): Settings {
     const raw = localStorage.getItem(KEY);
     if (!raw) return { ...DEFAULT_SETTINGS };
     const parsed = JSON.parse(raw) as Partial<Settings>;
-    return { ...DEFAULT_SETTINGS, ...parsed };
+    const merged: Settings = { ...DEFAULT_SETTINGS, ...parsed };
+    // Migrate legacy askPolicy values written by older builds.
+    if (merged.askPolicy === true || (merged.askPolicy as unknown) === "always") merged.askPolicy = "always";
+    else if (merged.askPolicy === false || (merged.askPolicy as unknown) === "edits") merged.askPolicy = "smart";
+    else if (merged.askPolicy !== "never") merged.askPolicy = DEFAULT_SETTINGS.askPolicy;
+    return merged;
   } catch {
     return { ...DEFAULT_SETTINGS };
   }

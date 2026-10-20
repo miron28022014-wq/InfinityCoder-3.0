@@ -4,7 +4,8 @@
 export type ProviderKind = "cloud" | "local" | "relay";
 export type Mode = "agent" | "ask" | "swarm";
 export type Effort = "low" | "medium" | "high" | "ultra";
-export type AskPolicy = "always" | "edits" | "never";
+/** Legacy aliases kept for persisted settings: "edits" ≡ "smart", boolean ≡ "always"/"never". */
+export type AskPolicy = "always" | "smart" | "edits" | "never" | true | false;
 export type SidebarTab = "files" | "search" | "agents" | "memory";
 
 export interface FsItem {
@@ -29,6 +30,10 @@ export interface GitStatus {
   staged: number;
   ahead: number;
   behind: number;
+  clean?: boolean;
+  is_repo?: boolean;
+  /** Legacy alias of `changed` produced by older backends. */
+  dirty?: number;
 }
 
 export type MsgRole = "user" | "assistant" | "system";

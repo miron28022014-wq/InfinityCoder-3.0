@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Icon } from "../../icons";
-import { Btn, Empty, Kbd, Spinner } from "../ui";
+import { Btn, Empty, Kbd, Spinner } from "../../ui";
 import { useStore, shallow } from "../../hooks/useStore";
 import { createEditor, parseLocation, type EditorHandle } from "../../lib/editor";
 import {

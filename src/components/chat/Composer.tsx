@@ -3,12 +3,20 @@
  */
 import { useRef, useState, type KeyboardEvent } from "react";
 import { Icon } from "../../icons";
-import { Btn, Kbd, Segmented } from "../ui";
+import { Btn, Kbd, Segmented } from "../../ui";
 import { useStore } from "../../hooks/useStore";
 import { patchSettings, send, stop } from "../../store";
 import type { Mode } from "../../types";
 
-export function Composer() {
+export function Composer({
+  disabled = false,
+  disabledReason
+}: {
+  /** No project open or the provider is not ready. */
+  disabled?: boolean;
+  /** Shown in the textarea placeholder while `disabled`. */
+  disabledReason?: string;
+}) {
   const [text, setText] = useState("");
   const ref = useRef<HTMLTextAreaElement>(null);
   const isRunning = useStore((s) => s.isRunning);

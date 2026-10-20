@@ -3,7 +3,7 @@
  */
 import { useState } from "react";
 import { Icon, type IconName } from "../../icons";
-import { Btn } from "../ui";
+import { Btn } from "../../ui";
 import { useStore, shallowArray } from "../../hooks/useStore";
 import { collapseAll, openFolder, openFile, toggleDir } from "../../store";
 import type { FsItem } from "../../types";

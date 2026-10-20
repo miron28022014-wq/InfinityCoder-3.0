@@ -146,14 +146,14 @@ export class AgentEngine {
         const args = (call.args ?? {}) as Record<string, unknown>;
         const toolEv = publish({
           kind: "tool",
-          label: `${call.name}`,
+          label: `${call.tool}`,
           agentId: "main",
           status: "running",
-          tool: { tool: call.name, args }
+          tool: { tool: call.tool, args }
         });
         const started = Date.now();
         try {
-          const output = await this.execTool(call.name, args, touched);
+          const output = await this.execTool(call.tool, args, touched);
           completeActivity(toolEv.id, "ok", {
             ok: true,
             preview: output.slice(0, 400),
