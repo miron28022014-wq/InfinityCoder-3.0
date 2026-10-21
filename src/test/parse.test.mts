@@ -90,4 +90,4 @@ const broken = parseToolCalls(`${OPEN}{"tool":"write_file","args":{"path":${CLOS
 eq("salvage broken payload", broken.map(c => [c.tool, c.broken]), [["write_file", true]]);
 
 console.log(`\n${pass} passed, ${fail} failed`);
-process.exit(fail ? 1 : 0);
+if (fail > 0) throw new Error(`${fail} parser regression test(s) failed`);
