@@ -11,7 +11,7 @@ InfinityCoder — настольное приложение на Tauri, React и
 - **Последняя опубликованная версия:** [GitHub Releases](https://github.com/miron28022014-wq/InfinityCoder-3.0/releases)
 - **Сборки CI:** [Actions → Build InfinityCoder (Windows installer)](https://github.com/miron28022014-wq/InfinityCoder-3.0/actions/workflows/build-windows.yml)
 
-Когда релиз опубликован, скачайте файл `InfinityCoder_*_x64-setup.exe) в разделе Assets. Если доступен только артефакт Actions, откройте успешный запуск workflow и скачайте `InfinityCoder-Windows-Installer` — это ZIP с установщиком. Артефакты Actions временные и могут истечь; для обычного распространения используйте Releases.
+Когда релиз опубликован, скачайте файл `InfinityCoder_*_x64-setup.exe` в разделе Assets. Если доступен только артефакт Actions, откройте успешный запуск workflow и скачайте `InfinityCoder-Windows-Installer` — это ZIP с установщиком. Артефакты Actions временные и могут истечь; для обычного распространения используйте Releases.
 
 ## Установка Windows
 
