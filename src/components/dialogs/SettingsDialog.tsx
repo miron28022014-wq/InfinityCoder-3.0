@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Icon, type IconName } from "../../icons";
-import { Btn, Dialog, Field, Input, Segmented, Select, Switch } from "../ui";
+import { Btn, Dialog, Field, Input, Segmented, Select, Switch } from "../../ui";
 import { useStore, shallow } from "../../hooks/useStore";
 import { checkProvider, openSettings, patchSettings } from "../../store";
 import { CLOUD_MODELS, DEFAULT_SETTINGS, RELAY_BASE_URL } from "../../lib/settings";
@@ -211,8 +211,8 @@ export function SettingsDialog() {
 
               <Field label="Подтверждения" hint="когда спрашивать перед действием">
                 <Select<AskPolicy>
-                  value={settings.ask}
-                  onChange={v => patchSettings({ ask: v as AskPolicy })}
+                  value={settings.askPolicy}
+                  onChange={v => patchSettings({ askPolicy: v as AskPolicy })}
                   options={[
                     { value: "never", label: "Никогда — работаю автономно" },
                     { value: "smart", label: "Только опасные операции" },

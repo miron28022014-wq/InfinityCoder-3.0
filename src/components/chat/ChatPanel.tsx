@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { Icon } from "../../icons";
-import { Btn, Kbd, StatusDot } from "../ui";
+import { Btn, Kbd, StatusDot } from "../../ui";
 import { MessageItem, ActivityStream } from "./MessageItem";
 import { Composer } from "./Composer";
 import { useStore, shallowArray } from "../../hooks/useStore";

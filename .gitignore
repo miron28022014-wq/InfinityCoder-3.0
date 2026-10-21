@@ -1,10 +1,6 @@
-node_modules
-dist
-release
-src-tauri/target
-src-tauri/bin
-.infinitycoder
-*.tsbuildinfo
-*.log
-.DS_Store
-Thumbs.db
+node_modules/
+dist/
+build/
+.env
+.env.local
+.env.*.local
