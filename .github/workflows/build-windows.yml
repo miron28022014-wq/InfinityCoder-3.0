@@ -38,7 +38,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             src-tauri/target
-          key: ic-cargo-${{ hashFiles('src-tauri/Cargo.lock') }}
+          key: ic-cargo-${{ hashFiles('src-tauri/Cargo.toml', 'src-tauri/Cargo.lock') }}
           restore-keys: ic-cargo-
 
       - name: Install dependencies
@@ -66,12 +66,12 @@ jobs:
           $server = Get-ChildItem "$env:RUNNER_TEMP\llama" -Recurse -Filter "llama-server*.exe" |
                     Where-Object { $_.Length -gt 1MB } | Select-Object -First 1
           if (-not $server) { throw "llama-server.exe not found" }
-          Copy-Item $server.FullName "src-tauri\bin\llama-server-vulkan.exe" -Force
+          Copy-Item $server.FullName "src-tauri\bin\llama-server-vulkan-x86_64-pc-windows-msvc.exe" -Force
           Get-ChildItem $server.Directory -Filter "*.dll" | ForEach-Object {
             $d = Join-Path "src-tauri\bin" $_.Name
             if (-not (Test-Path $d)) { Copy-Item $_.FullName $d -Force }
           }
-          $f = Get-Item "src-tauri\bin\llama-server-vulkan.exe"
+          $f = Get-Item "src-tauri\bin\llama-server-vulkan-x86_64-pc-windows-msvc.exe"
           Write-Host "llama-server: $($f.Length) bytes"
           if ($f.Length -lt 1MB) { throw "llama-server is unexpectedly small" }
 
