@@ -1245,7 +1245,8 @@ async fn memory_list(workspace_root: String, limit: Option<usize>, kind: Option<
         } else {
             stmt.query_map(params![kind], entry_from).map_err(|e| e.to_string())?
         };
-        Ok(rows.filter_map(Result::ok).collect())
+        let collected: Vec<Entry> = rows.filter_map(Result::ok).collect();
+        Ok(collected)
     })
     .await
     .map_err(|e| format!("task failed: {e}"))?
