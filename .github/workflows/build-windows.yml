@@ -44,6 +44,9 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
+      - name: Restore Rollup Windows native package
+        run: npm install --no-save --package-lock=false --no-audit --no-fund @rollup/rollup-win32-x64-msvc@4.64.0
+
       - name: Download Vulkan llama.cpp runtime
         shell: pwsh
         run: |
